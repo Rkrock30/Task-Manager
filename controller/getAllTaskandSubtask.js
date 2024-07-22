@@ -8,31 +8,35 @@ async function getAllTaskAndSubtask(req, res) {
         const userId = user._id;
 
         const getAllTask = await User.aggregate([
-            { $match: { _id: userId } },
-            { $project: {
-                tasks: {
-                  $filter: {
-                    input: "$tasks",
-                    as: "task",
-                    cond: { $and: [
-                      { $eq: ["$$task.deleteFlag", "N"] },
-                      { $setDifference: [
-                        {
-                          $map: {
-                            input: "$$task.subtasks",
-                            as: "subtask",
-                            in: { $eq: ["$$subtask.deleteFlag", "N"] }
-                          }
-                        },
-                        [false]
-                      ]}
-                    ]}
-                  }
+          { $match: { _id: userId } },
+          { $project: {
+              tasks: {
+                $filter: {
+                  input: "$tasks",
+                  as: "task",
+                  cond: { $eq: ["$$task.deleteFlag", "N"] }
                 }
               }
             }
-          ]);
-      
+          },
+          { $unwind: "$tasks" },
+          { $addFields: {
+              "tasks.subtasks": {
+                $filter: {
+                  input: "$tasks.subtasks",
+                  as: "subtask",
+                  cond: { $eq: ["$$subtask.deleteFlag", "N"] }
+                }
+              }
+            }
+          },
+          { $group: {
+              _id: "$_id",
+              tasks: { $push: "$tasks" }
+            }
+          },
+          { $project: { tasks: 1 } }
+        ]);
 
         if (!getAllTask) {
             return httpErrorResponseHandler(res, 404, "Task or Subtask not found or already deleted");

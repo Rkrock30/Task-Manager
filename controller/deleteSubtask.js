@@ -18,13 +18,11 @@ async function deleteSubtask(req, res) {
             {
                 _id: userId,
                 'tasks._id': taskObjectId,
-                'tasks.deleteFlag': 'N',
-                'tasks.subtasks._id': subTaskObjectId,
-                'tasks.subtasks.deleteFlag': 'N'
+                'tasks.subtasks._id': subTaskObjectId
             },
             {
                 $set: {
-                    'tasks.$[task].subtasks.$[subtask].deletFlag': "Y"
+                    'tasks.$[task].subtasks.$[subtask].deleteFlag': "Y"
                 }
             },
             {

@@ -10,6 +10,8 @@ const {subTask}=require('../controller/createSubTask')
 const {editSubTask}=require('../controller/editSubtask')
 const {getAllTaskAndSubtask}=require('../controller/getAllTaskandSubtask')
 const {deleteSubtask}=require('../controller/deleteSubtask')
+const {getSubtaskByTaskId}=require('../controller/getSubtaskbytaskId')
+
 
 
 
@@ -42,6 +44,10 @@ router.put('/tasks/:taskId/subtasks/:subTaskId',auth,(req,res)=>{
 })
 router.delete('/tasks/:taskId/subtasks/:subTaskId',auth,(req,res)=>{
     deleteSubtask(req,res)
+})
+
+router.get('/tasks/:taskId/subtasks',auth,(req,res)=>{
+    getSubtaskByTaskId(req,res)
 })
 
 
