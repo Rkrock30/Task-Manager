@@ -1,0 +1,28 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "description": "Task Manager Assignment",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rkrock30/Task_Manger_H2S.git"
+  },
+  "author": "Ranjeet Gupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rkrock30/Task_Manger_H2S/issues"
+  },
+  "homepage": "https://github.com/Rkrock30/Task_Manger_H2S#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.1",
+    "q": "^1.5.1"
+  }
+}
