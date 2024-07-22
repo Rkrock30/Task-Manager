@@ -1,0 +1,386 @@
+{
+	"info": {
+		"_postman_id": "118c1cde-3c1d-4def-b671-667d4e9d5805",
+		"name": "Task management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24619191"
+	},
+	"item": [
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\":\"Ranjeet\",\n   \"email\":\"gupta22@gmail.com\",\n   \"password\":\"Ranjeet@30\",\n   \"confirmPassword\":\"Ranjeet@30\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/createUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"createUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"value": "hju",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"email\":\"gupta22@gmail.com\",\n   \"password\":\"Ranjeet@30\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createTask",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"subject\": \"Assignmnet Sample 2\",\n  \"deadline\": \"2024-07-23\",\n  \"status\": \"P\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editTask",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"subject\": \"Task Edited\",\n    \"deadline\": \"2024-10-18\",\n    \"status\": \"P\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/tasks/669e9eb1fc39accee35ed716",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks",
+						"669e9eb1fc39accee35ed716"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteTask",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/tasks/669e9df0fc39accee35ed70d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks",
+						"669e9df0fc39accee35ed70d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createSubtasks",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"subject\": \"Subtask 1\",\n        \"deadline\": \"2024-08-01T00:00:00Z\",\n        \"status\": \"P\"\n    },\n    {\n        \"subject\": \"Subtask 2\",\n        \"deadline\": \"2024-08-05T00:00:00Z\",\n        \"status\": \"I\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/tasks/669e9eb1fc39accee35ed716/subtasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks",
+						"669e9eb1fc39accee35ed716",
+						"subtasks"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSubtasksByTaskId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/tasks/669e9eb1fc39accee35ed716/subtasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks",
+						"669e9eb1fc39accee35ed716",
+						"subtasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editSubTask",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"subject\": \"Subtask 1\",\n    \"deadline\": \"2024-10-12\",\n    \"status\": \"P\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/tasks/669e9eb1fc39accee35ed716/subtasks/669e9f58fc39accee35ed728",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks",
+						"669e9eb1fc39accee35ed716",
+						"subtasks",
+						"669e9f58fc39accee35ed728"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteSubTask",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4500/api/tasks/669e9eb1fc39accee35ed716/subtasks/669e9f58fc39accee35ed728",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks",
+						"669e9eb1fc39accee35ed716",
+						"subtasks",
+						"669e9f58fc39accee35ed728"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Of tasks and Sub Task",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjllOWM5NWZjMzlhY2NlZTM1ZWQ3MDYiLCJpYXQiOjE3MjE2NzEwODcsImV4cCI6MTcyMTY3Mjg4N30.-qFrHbMyKzC2JAHazbBci_IkCrchY1iPWVJBrP0cEjI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4500/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

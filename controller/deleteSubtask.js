@@ -1,36 +1,35 @@
 const { httpErrorResponseHandler, httpSuccessResponseHandler } = require("../utils/common");
-const {User}=require('../model/user')
+const { User } = require('../model/user');
 
 async function deleteSubtask(req, res) {
     try {
-
         const { taskId, subTaskId } = req.params;
         if (!taskId || !subTaskId) {
             return httpErrorResponseHandler(res, 400, "Task ID or Subtask ID cannot be null");
         }
-        const { user } = req;
 
+        const { user } = req;
         const userId = user._id;
-        const taskObjectId = taskId;
-        const subTaskObjectId = subTaskId;
 
         const updatedUser = await User.findOneAndUpdate(
             {
                 _id: userId,
-                'tasks._id': taskObjectId,
-                'tasks.subtasks._id': subTaskObjectId
+                'tasks._id': taskId,
+                'tasks.subtasks._id': subTaskId,
+                'tasks.subtasks.deleteFlag': 'N'  // Ensure the subtask is not already deleted
             },
             {
                 $set: {
-                    'tasks.$[task].subtasks.$[subtask].deleteFlag': "Y"
+                    'tasks.$[task].subtasks.$[subtask].deleteFlag': 'Y'
                 }
             },
             {
                 arrayFilters: [
-                    { 'task._id': taskObjectId },
-                    { 'subtask._id': subTaskObjectId }
+                    { 'task._id': taskId },
+                    { 'subtask._id': subTaskId }
                 ],
-                new: true
+                new: true,
+                useFindAndModify: false
             }
         );
 
@@ -38,10 +37,13 @@ async function deleteSubtask(req, res) {
             return httpErrorResponseHandler(res, 404, "Task or Subtask not found or already deleted");
         }
 
-        return httpSuccessResponseHandler(res, 201, "Subtask updated successfully", updatedUser);
+        const updatedTask = updatedUser.tasks.id(taskId);
+        const updatedSubtask = updatedTask.subtasks.id(subTaskId);
+
+        return httpSuccessResponseHandler(res, 200, "Subtask deleted successfully", updatedSubtask);
     } catch (err) {
-        console.error(err);
-        return httpErrorResponseHandler(res, err.code || 500, err.message || 'Internal Server Error');
+        console.error("Error deleting subtask:", err);
+        return httpErrorResponseHandler(res, 500, err.message || 'Internal Server Error');
     }
 }
 

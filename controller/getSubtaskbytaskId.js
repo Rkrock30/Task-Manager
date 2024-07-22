@@ -40,7 +40,7 @@ async function getSubtaskByTaskId(req, res) {
             return httpErrorResponseHandler(res, 404, "Task or Subtask not found or already deleted");
         }
 
-        return httpSuccessResponseHandler(res, 200, "Subtasks retrieved successfully", tasks[0].subtasks);
+        return httpSuccessResponseHandler(res, 200, "Subtasks retrieved successfully", tasks[0]?.subtasks);
     } catch (err) {
         console.error(err);
         return httpErrorResponseHandler(res, 500, 'Internal Server Error');

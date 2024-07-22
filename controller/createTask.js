@@ -2,6 +2,7 @@ const { httpErrorResponseHandler, httpSuccessResponseHandler } = require("../uti
 const { bodyValidation } = require('../utils/bodyValidation');
 const { User } = require('../model/user');
 const Joi = require('joi');
+
 const taskSchema = Joi.object({
     subject: Joi.string().required().messages({
         'any.required': 'Subject cannot be empty',
@@ -10,6 +11,7 @@ const taskSchema = Joi.object({
     deadline: Joi.date().iso().greater(Date.now()).required().messages({
         'date.base': 'Deadline must be a valid date',
         'date.isoDate': 'Deadline must be in ISO 8601 date format',
+        'date.greater': 'Deadline must be in the future',
         'any.required': 'Deadline cannot be empty',
     }),
     status: Joi.string().max(1).valid('P', 'C', 'I').required().messages({
@@ -30,11 +32,10 @@ async function createTask(req, res) {
         const { subject, deadline, status } = data;
         const { user } = req;
 
-        const userId = user._id;
-        const newTask = { subject, deadline, status };
+        const newTask = { subject, deadline, status, deleteFlag: 'N' };
 
         const updatedUser = await User.findByIdAndUpdate(
-            userId,
+            user._id,
             { $push: { tasks: newTask } },
             { new: true, useFindAndModify: false }
         );
@@ -43,11 +44,10 @@ async function createTask(req, res) {
             return httpErrorResponseHandler(res, 404, "User not found");
         }
 
-        return httpSuccessResponseHandler(res, 201, "Task Created Successfully", newTask);
-
+        return httpSuccessResponseHandler(res, 201, "Task created successfully", newTask);
     } catch (err) {
-        console.error(err);
-        return httpErrorResponseHandler(res, err.code || 500, err.message || 'Internal Server Error');
+        console.error("Error creating task:", err);
+        return httpErrorResponseHandler(res, 500, err.message || 'Internal Server Error');
     }
 }
 

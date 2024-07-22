@@ -5,22 +5,25 @@ async function deleteTask(req, res) {
     try {
         const { taskId } = req.params;
         if (!taskId) {
-            return httpErrorResponseHandler(res, 404, "Task Id is null");
+            return httpErrorResponseHandler(res, 400, "Task ID cannot be null");
         }
 
         const { user } = req;
         const userId = user._id;
-        const taskObjectId = taskId;
 
         const updatedUser = await User.findOneAndUpdate(
             {
                 _id: userId,
-                'tasks._id': taskObjectId,
+                'tasks._id': taskId,
             },
             {
                 $set: {
-                    'tasks.$.deleteFlag':'Y'
+                    'tasks.$.deleteFlag': 'Y'
                 }
+            },
+            {
+                new: true,
+                useFindAndModify: false
             }
         );
 
@@ -28,13 +31,12 @@ async function deleteTask(req, res) {
             return httpErrorResponseHandler(res, 404, "Task not found or already deleted");
         }
 
-        const updatedTask = updatedUser.tasks.id(taskObjectId);
-        updatedTask.deleteFlag="Y"
+        const updatedTask = updatedUser.tasks.id(taskId);
 
-        return httpSuccessResponseHandler(res, 200, "Task Deleted Successfully", updatedTask);
+        return httpSuccessResponseHandler(res, 200, "Task deleted successfully", updatedTask);
     } catch (err) {
-        console.error(err);
-        return httpErrorResponseHandler(res, err.code || 500, err.message || 'Internal Server Error');
+        console.error("Error deleting task:", err);
+        return httpErrorResponseHandler(res, 500, err.message || 'Internal Server Error');
     }
 }
 
